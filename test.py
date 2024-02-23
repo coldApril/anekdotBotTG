@@ -49,7 +49,6 @@ def handle_message(message):
         bot.send_message(message.chat.id,
                          text="Введите, пожалуйста, с какой периодичностью присылать шутки. Время указывается в минутах.",
                          reply_markup=markup)
-        # flagP = True
 
     elif message.text.isdigit() and int(message.text) > 0:
         n = int(message.text)
@@ -59,7 +58,7 @@ def handle_message(message):
         bt3 = telebot.types.KeyboardButton('Отменить получение анекдота')
         markup.add(bt1, bt3)
         flagP = True
-        get_periodic_anekdot(message, n)  # Добавляем аргумент n здесь
+        get_periodic_anekdot(message, n)
 
     elif message.text == 'Отменить получение анекдота':
         bt2 = telebot.types.KeyboardButton('Получать анекдот через интервал времени')
@@ -90,6 +89,7 @@ def get_periodic_anekdot(message, n):
         end_hours = end_minutes // 60
         end_minutes = n - 60
     current_time = datetime.now()
+
     end_time = current_time + timedelta(hours=end_hours, minutes=end_minutes)
     while flagP:
         if datetime.now() >= end_time and flagP == True:
