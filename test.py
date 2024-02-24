@@ -10,7 +10,7 @@ all_anecdotes = []
 flagP = False
 
 try:
-    with open('users', 'r') as file:
+    with open('users.json', 'r') as file:
         users_data = json.load(file)
 except FileNotFoundError:
     users_data = {}
@@ -89,10 +89,10 @@ def get_periodic_anekdot(message, n):
         end_hours = end_minutes // 60
         end_minutes = n - 60
     current_time = datetime.now()
-
     end_time = current_time + timedelta(hours=end_hours, minutes=end_minutes)
     while flagP:
-        if datetime.now() >= end_time and flagP == True:
+        current_time = datetime.now()
+        if current_time >= end_time and flagP == True:
             get_anekdot(message, flagP)
             end_time = datetime.now() + timedelta(hours=end_hours, minutes=end_minutes)
         time.sleep(1)
